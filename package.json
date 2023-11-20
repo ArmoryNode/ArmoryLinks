@@ -1,0 +1,9 @@
+{
+    "name": "armorylinks",
+    "version": "1.0.0",
+    "author": "armorynode",
+    "private": true,
+    "scripts": {
+        "test": "sass --version"
+    }
+}
