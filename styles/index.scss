@@ -5,15 +5,15 @@ $border-radius: 10px;
 
 $link-height: 60px;
 $link-gap-height: 20px;
-$link-count: 3;
+$link-count: 4;
 
 // In seconds
-$profile-animation-duration: .7;
+$profile-animation-duration: 1;
 
 $link-list-animation-delay: $profile-animation-duration;
 
 // Should be the middle of the page
-$link-container-height: ($link-height + $link-gap-height) * $link-count / 2;
+$link-container-height: calc(($link-height + $link-gap-height) * $link-count / 2);
 
 @font-face {
     font-family: "Poppins";
@@ -21,7 +21,7 @@ $link-container-height: ($link-height + $link-gap-height) * $link-count / 2;
         url("/fonts/Poppins/Poppins-Light.ttf"),
         url("/fonts/Poppins/Poppins-Regular.ttf"),
         url("/fonts/Poppins/Poppins-Medium.ttf"),
-        url("/fonts/Poppins/Poppins-Bold.ttf");
+        url("/fonts/Poppins/Poppins-Bold.ttf"); 
 }
 
 @mixin transition-for($property) {
@@ -38,11 +38,11 @@ $color-map: (
     'white': #FCFCFC,
     'purple': #473666,
     'yellow': #E9DC29,
-    'green': #03D391,
+    'green': #25D49D,
     'blue': #A2E2F6,
-    'grey': #ACACAC,
+    'grey': #E4E4E4,
     'pink': #FDACC8,
-    'red': #ff7579
+    'red': #FF7579
 );
 
 *, *::before, *::after {
@@ -106,8 +106,8 @@ body {
             .nav-link {
                 display: flex;
                 align-items: center;
-                width: 250px;
-                height: 60px;
+                width: 320px;
+                height: 80px;
                 border: 3px solid $border-color;
                 border-radius: $border-radius;
                 color: $text-color;
@@ -129,11 +129,9 @@ body {
                 }
 
                 .link-body {
-                    text-align: center;
                     font-size: larger;
                     font-weight: bold;
                     margin-inline: 1em;
-
                 }
 
                 .link-icon {
