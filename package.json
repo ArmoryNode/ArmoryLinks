@@ -4,6 +4,7 @@
     "author": "armorynode",
     "private": true,
     "scripts": {
-        "test": "sass --version"
+        "test": "sass --version",
+        "build": "sass styles/index.scss:styles/index.min.css --style compressed --no-source-map"
     }
 }
