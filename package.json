@@ -5,6 +5,6 @@
     "private": true,
     "scripts": {
         "test": "sass --version",
-        "build": "sass styles/index.scss:styles/index.min.css --style compressed --no-source-map"
+        "build": "npm test && sass styles/index.scss:styles/index.min.css --style compressed --no-source-map"
     }
 }
