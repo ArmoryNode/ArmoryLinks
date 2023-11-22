@@ -1,8 +1,4 @@
-$background-color: #FDF7F1;
-$text-color: #070605;
-$border-color: $text-color;
 $border-radius: 10px;
-
 $link-height: 60px;
 $link-gap-height: 20px;
 $link-count: 4;
@@ -15,13 +11,33 @@ $link-list-animation-delay: $profile-animation-duration;
 // Should be the middle of the page
 $link-container-height: calc(($link-height + $link-gap-height) * $link-count / 2);
 
+@media (prefers-color-scheme: dark) {
+    body {
+        --background-color: #161616;
+        --foreground-color: #343434;
+        --text-color: #C3C3C3;
+        --border-color: transparent;
+        --border-width: 0px;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        --background-color: #FDF7F1;
+        --foreground-color: #EFEFEF;
+        --text-color: #070605;
+        --border-color: var(--text-color);
+        --border-width: 3px;
+    }
+}
+
 @font-face {
     font-family: "Poppins";
-    src: 
+    src:
         url("/fonts/Poppins/Poppins-Light.ttf"),
         url("/fonts/Poppins/Poppins-Regular.ttf"),
         url("/fonts/Poppins/Poppins-Medium.ttf"),
-        url("/fonts/Poppins/Poppins-Bold.ttf"); 
+        url("/fonts/Poppins/Poppins-Bold.ttf");
 }
 
 @mixin transition-for($property) {
@@ -45,7 +61,9 @@ $color-map: (
     'red': #FF7579
 );
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -54,27 +72,27 @@ body {
     font-family: "Poppins";
     margin: 0;
     padding: 0;
-    color: $text-color;
-    
+    background-color: var(--background-color);
+    color: var(--text-color);
+
     main {
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
         height: 100vh;
-        background-color: $background-color;
 
         #profile {
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
-            transform: translateY($link-container-height);
-            animation-name: move-up;
-            animation-duration: #{$profile-animation-duration}s;
-            animation-fill-mode: forwards;
-            animation-timing-function: ease;
+            // transform: translateY($link-container-height);
+            // animation-name: move-up;
+            // animation-duration: #{$profile-animation-duration}s;
+            // animation-fill-mode: forwards;
+            // animation-timing-function: ease;
 
-            > .profile-image {
+            >.profile-image {
                 width: 100px;
                 height: 100px;
                 background-image: url("/images/profile.png");
@@ -82,7 +100,7 @@ body {
                 background-size: 100px 100px;
                 background-repeat: no-repeat;
                 border-radius: 50%;
-                border: 3px solid $border-color;
+                border: var(--border-width) solid var(--border-color);
                 cursor: pointer;
                 @include transition-for(transform);
 
@@ -91,7 +109,7 @@ body {
                 }
             }
 
-            > .profile-name {
+            >.profile-name {
                 margin-block-end: 25px;
             }
         }
@@ -103,69 +121,73 @@ body {
             row-gap: 20px;
             counter-reset: link;
 
-            .nav-link {
-                display: flex;
-                align-items: center;
-                width: 320px;
-                height: 80px;
-                border: 3px solid $border-color;
-                border-radius: $border-radius;
-                color: $text-color;
-                text-decoration: none;
-                opacity: 0;
-                animation: fade-up;
-                animation-duration: .5s;
-                animation-fill-mode: forwards;
-                animation-timing-function: ease;
-                @include add-shadow;
-
-                .icon-container {
+            .nav-link-wrapper {
+                .nav-link {
                     display: flex;
                     align-items: center;
-                    padding: 10px;
-                    height: 100%;
-                    color: $background-color;
-                    background-color: $text-color;
-                }
-
-                .link-body {
-                    font-size: larger;
-                    font-weight: bold;
-                    margin-inline: 1em;
-                }
-
-                .link-icon {
-                    align-self: center;
-                    margin-inline-start: auto;
-                    margin-inline-end: 15px;
-                }
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 100%;
-                    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                    width: 320px;
+                    height: 80px;
+                    border: var(--border-width) solid var(--border-color);
+                    border-radius: $border-radius;
+                    color: var(--text-color);
+                    text-decoration: none;
                     opacity: 0;
-                    @include transition-for(opacity);
+                    animation: fade-up;
+                    animation-duration: .5s;
+                    animation-fill-mode: forwards;
+                    animation-timing-function: ease;
+                    overflow: hidden; // fixes `.icon-container` background rendering above border
+
+                    .icon-container {
+                        display: flex;
+                        align-items: center;
+                        padding: 10px;
+                        height: 100%;
+                        color: var(--text-color);
+                        background-color: var(--foreground-color);
+                    }
+
+                    .link-body {
+                        font-size: larger;
+                        font-weight: bold;
+                        margin-inline: 1em;
+                    }
+
+                    .link-icon {
+                        align-self: center;
+                        margin-inline-start: auto;
+                        margin-inline-end: 15px;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        // box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                        opacity: 0;
+                        @include transition-for(opacity);
+                    }
+
+                    &:hover::after {
+                        opacity: 1;
+                    }
                 }
 
-                &:hover::after {
-                    opacity: 1;
+                @each $key, $value in $color-map {
+                    .nav-link-#{$key} {
+                        background-color: $value;
+                    }
                 }
             }
 
             @for $index from 1 through $link-count {
-                .nav-link:nth-of-type(#{$index}) {
-                    animation-delay: #{($index + $link-list-animation-delay) * .12}s;
-                }
-            }
-
-            @each $key, $value in $color-map {
-                .nav-link-#{$key} {
-                    background-color: $value;
+                .nav-link-wrapper:nth-of-type(#{$index}) {
+                    .nav-link {
+                        animation-delay: #{($index + $link-list-animation-delay) * .12}s;
+                    }
                 }
             }
         }
@@ -191,12 +213,8 @@ body {
     }
 }
 
-@keyframes move-up {
-    from {
-        transform: translateY($link-container-height);
-    }
+@keyframes expand {
+    0% {}
 
-    to {
-        transform: translateY(0);
-    }
+    100% {}
 }
