@@ -4,8 +4,8 @@
     "author": "armorynode",
     "private": true,
     "scripts": {
-        "test": "sass --version & uglifyjs --version",
-        "build": "npm install & npm test & npm run _sass-build & npm run _minify-js",
+        "test": "sass --version && uglifyjs --version",
+        "build": "npm install && npm test && npm run _sass-build && npm run _minify-js",
         "watch": "npm run _sass-watch",
         "_sass-build": "sass src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
         "_sass-watch": "sass -w src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
