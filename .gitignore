@@ -405,5 +405,5 @@ wwwroot/css/*.css
 wwwroot/css/*.min.css
 
 # Minified JS files
-# wwwroot/js/*.js
-# wwwroot/js/*.min.js
+wwwroot/js/*.js
+wwwroot/js/*.min.js
