@@ -401,5 +401,9 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Compiled CSS files
-**/*.css
-**/*.min.css
+wwwroot/css/*.css
+wwwroot/css/*.min.css
+
+# Minified JS files
+wwwroot/js/*.js
+wwwroot/js/*.min.js
