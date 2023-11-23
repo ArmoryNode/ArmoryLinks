@@ -4,7 +4,14 @@
     "author": "armorynode",
     "private": true,
     "scripts": {
-        "test": "sass --version",
-        "build": "npm test && sass styles/index.scss:wwwroot/css/index.min.css --style compressed --no-source-map"
+        "test": "sass --version && uglifyjs --version",
+        "build": "npm install && npm test && npm run _sass-build && npm run _minify-js",
+        "watch": "npm run _sass-watch",
+        "_sass-build": "sass src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
+        "_sass-watch": "sass -w src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
+        "_minify-js": "uglifyjs ./src/scripts/index.js --compress --mangle --output wwwroot/js/index.min.js"
+    },
+    "dependencies": {
+        "uglify-js": "^3.17.4"
     }
 }

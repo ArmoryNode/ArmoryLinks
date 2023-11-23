@@ -11,26 +11,6 @@ $link-list-animation-delay: $profile-animation-duration;
 // Should be the middle of the page
 $link-container-height: calc(($link-height + $link-gap-height) * $link-count / 2);
 
-@media (prefers-color-scheme: dark) {
-    body {
-        --background-color: #161616;
-        --foreground-color: #343434;
-        --text-color: #C3C3C3;
-        --border-color: transparent;
-        --border-width: 0px;
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    body {
-        --background-color: #FDF7F1;
-        --foreground-color: #EFEFEF;
-        --text-color: #070605;
-        --border-color: var(--text-color);
-        --border-width: 3px;
-    }
-}
-
 @font-face {
     font-family: "Poppins";
     src:
@@ -50,16 +30,7 @@ $link-container-height: calc(($link-height + $link-gap-height) * $link-count / 2
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-$color-map: (
-    'white': #FCFCFC,
-    'purple': #473666,
-    'yellow': #E9DC29,
-    'green': #25D49D,
-    'blue': #A2E2F6,
-    'grey': #E4E4E4,
-    'pink': #FDACC8,
-    'red': #FF7579
-);
+$color-list: ('green','red','blue','grey');
 
 *,
 *::before,
@@ -75,6 +46,72 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
 
+    // Initialize body to light theme
+    --background-color: #FDF7F1;
+    --foreground-color: #333333;
+    --text-color: var(--foreground-color);
+    --icon-color: var(--background-color);
+    --toggle-icon: '\f186';
+    --toggle-color: var(--foreground-color);
+    --toggle-icon-color: var(--background-color);
+    --border-color: var(--foreground-color);
+    --border-width: 3px;
+    --footer-color: #000000;
+
+    --green: #80CEB9;
+    --red: #F9AEC0;
+    --blue: #8BCDDA;
+    --grey: #BFC2C5;
+
+    &.dark {
+        --background-color: #161616;
+        --foreground-color: #343434;
+        --text-color: var(--foreground-color);
+        --icon-color: #FDF7F1;
+        --toggle-icon: '\e0c9';
+        --toggle-color: #FFFFFF;
+        --toggle-icon-color: var(--text-color);
+        --border-color: #2F2F2F;
+        --border-width: 3px;
+        --footer-color: #FFFFFF;
+
+    }
+
+    @each $color in $color-list {
+        .bg-#{$color} {
+            background-color: var(--#{$color});
+        }
+    }
+
+    #themeToggle {
+        position: fixed;
+        display: flex;
+        color: var(--toggle-icon-color);
+        background-color: var(--toggle-color);
+        top: 30px;
+        right: 30px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        #themeToggleIcon {
+            --icon-size: 26px;
+            height: var(--icon-size);
+
+            &::before {
+                content: var(--toggle-icon);
+                font: var(--fa-font-solid);
+                font-size: var(--icon-size);
+                line-height: var(--icon-size);
+                width: var(--icon-size);
+            }
+        }
+
+    }
+
     main {
         display: flex;
         flex-flow: column nowrap;
@@ -86,11 +123,7 @@ body {
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
-            // transform: translateY($link-container-height);
-            // animation-name: move-up;
-            // animation-duration: #{$profile-animation-duration}s;
-            // animation-fill-mode: forwards;
-            // animation-timing-function: ease;
+            margin-block-end: 25px;
 
             >.profile-image {
                 width: 100px;
@@ -108,10 +141,6 @@ body {
                     transform: rotate(-10deg) scale(1.2);
                 }
             }
-
-            >.profile-name {
-                margin-block-end: 25px;
-            }
         }
 
         nav {
@@ -122,6 +151,16 @@ body {
             counter-reset: link;
 
             .nav-link-wrapper {
+                position: relative;
+
+                &:hover {
+                    .nav-link {
+                        transform: translateY(-15px);
+                        -webkit-transform: translateY(-15px);
+                        -moz-transform: translateY(-15px);
+                    }
+                }
+
                 .nav-link {
                     display: flex;
                     align-items: center;
@@ -135,26 +174,32 @@ body {
                     animation: fade-up;
                     animation-duration: .5s;
                     animation-fill-mode: forwards;
-                    animation-timing-function: ease;
-                    overflow: hidden; // fixes `.icon-container` background rendering above border
+                    animation-timing-function: ease-in-out;
+                    @include transition-for(transform);
 
                     .icon-container {
                         display: flex;
                         align-items: center;
                         padding: 10px;
                         height: 100%;
-                        color: var(--text-color);
+                        color: var(--icon-color);
                         background-color: var(--foreground-color);
+
+                        // Fixes some visual artifacts with the dark theme
+                        border-top-left-radius: $border-radius - 4;
+                        border-bottom-left-radius: $border-radius - 4;
                     }
 
                     .link-body {
                         font-size: larger;
                         font-weight: bold;
+                        color: var(--text-color);
                         margin-inline: 1em;
                     }
 
                     .link-icon {
                         align-self: center;
+                        color: var(--text-color);
                         margin-inline-start: auto;
                         margin-inline-end: 15px;
                     }
@@ -175,18 +220,12 @@ body {
                         opacity: 1;
                     }
                 }
-
-                @each $key, $value in $color-map {
-                    .nav-link-#{$key} {
-                        background-color: $value;
-                    }
-                }
             }
 
             @for $index from 1 through $link-count {
                 .nav-link-wrapper:nth-of-type(#{$index}) {
                     .nav-link {
-                        animation-delay: #{($index + $link-list-animation-delay) * .12}s;
+                        animation-delay: #{$index * .07}s;
                     }
                 }
             }
@@ -194,27 +233,22 @@ body {
     }
 
     footer {
-        --width: 130px;
+        --width: 160px;
         position: absolute;
-        bottom: 0;
-        width: var(--width);
+        bottom: -1.5em;
         left: calc(calc(100vw / 2) - calc(var(--width) / 2));
+        width: var(--width);
+        color: var(--footer-color);
     }
 }
 
 @keyframes fade-up {
     from {
-        transform: translateY(25px);
+        transform: translateY(50px);
     }
 
     to {
         transform: translateY(0);
         opacity: 1;
     }
-}
-
-@keyframes expand {
-    0% {}
-
-    100% {}
 }
