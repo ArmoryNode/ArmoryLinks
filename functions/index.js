@@ -1,7 +1,7 @@
 addEventListener('fetch', event => event.respondWith(handleRequest(event.request)));
 
 /**
- * 
+ * Injects `nonce` attribute into script and style tags to enable CSP.
  * @param {Request} request 
  */
 async function handleRequest(request) {
