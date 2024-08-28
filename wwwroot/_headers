@@ -5,5 +5,5 @@
   Content-Security-Policy: default-src 'self' https://*.armorylinks.pages.dev; frame-ancestors: 'none';
   Access-Control-Allow-Origin: https://armorylinks.pages.dev
 
-https://:project.pages.dev/*
+https://armorylinks.pages.dev/*
   X-Robots-Tag: noindex
