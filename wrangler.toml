@@ -1,8 +1,12 @@
 name = "armorylinks"
-main = "wwwroot/index.min.js"
-compatibility_date = "2024-08-29"
-
-workers_dev = true
+pages_build_output_dir = "wwwroot"
+compatibility_date = "2023-11-15"
 
 [build]
 command = "npm run build"
+
+[vars]
+NODE_VERSION = "21.1.0"
+
+[env.production.vars]
+NODE_VERSION = "21.1.0"
