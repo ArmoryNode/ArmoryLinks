@@ -7,3 +7,6 @@ NODE_VERSION = "21.1.0"
 
 [env.production.vars]
 NODE_VERSION = "21.1.0"
+
+[dev]
+host = "localhost"

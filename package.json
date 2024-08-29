@@ -10,7 +10,7 @@
         "_sass-build": "sass src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
         "_sass-watch": "sass -w src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
         "_minify-js": "uglifyjs src/scripts/index.js --output wwwroot/js/index.min.js --compress --mangle",
-        "start": "npx wrangler pages dev ./wwwroot"
+        "start": "npm run build && npx wrangler pages dev"
     },
     "dependencies": {
         "uglify-js": "^3.17.4"
