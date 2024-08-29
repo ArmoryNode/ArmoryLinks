@@ -2,9 +2,6 @@ name = "armorylinks"
 pages_build_output_dir = "wwwroot"
 compatibility_date = "2023-11-15"
 
-[build]
-command = "npm run build"
-
 [vars]
 NODE_VERSION = "21.1.0"
 
