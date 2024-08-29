@@ -2,8 +2,8 @@
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
-  Content-Security-Policy: default-src 'self' https://*.armorylinks.pages.dev https://*.fontawesome.com; frame-ancestors 'none';
-  Access-Control-Allow-Origin: https://armorylinks.pages.dev
+  Content-Security-Policy: base-uri 'self'; default-src 'self'; script-src 'strict-dynamic'; style-src 'self' https://*.fontawesome.com; frame-ancestors 'none'; object-src 'none'; font-src 'self' https://*.fontawesome.com
+  Access-Control-Allow-Origin: *
 
 https://armorylinks.pages.dev/*
   X-Robots-Tag: noindex

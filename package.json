@@ -9,9 +9,14 @@
         "watch": "npm run _sass-watch",
         "_sass-build": "sass src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
         "_sass-watch": "sass -w src/styles/index.scss:wwwroot/css/index.min.css --style=compressed --no-source-map",
-        "_minify-js": "uglifyjs src/scripts/index.js --output wwwroot/js/index.min.js --compress --mangle"
+        "_minify-js": "uglifyjs src/scripts/index.js --output wwwroot/js/index.min.js --compress --mangle",
+        "start": "npx wrangler pages dev ./wwwroot"
     },
     "dependencies": {
         "uglify-js": "^3.17.4"
+    },
+    "devDependencies": {
+        "@cloudflare/workers-types": "^4.20240821.1",
+        "wrangler": "^3.72.3"
     }
 }

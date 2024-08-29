@@ -407,3 +407,6 @@ wwwroot/css/*.min.css
 # Minified JS files
 wwwroot/js/*.js
 wwwroot/js/*.min.js
+
+# Exclude wrangler
+.wrangler/**/*

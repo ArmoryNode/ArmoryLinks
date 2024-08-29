@@ -1,25 +1,43 @@
-addEventListener('fetch', event => event.respondWith(handleRequest(event.request)));
-
 /**
  * Injects `nonce` attribute into script and style tags to enable CSP.
- * @param {Request} request 
+ * @param {import("@cloudflare/workers-types/experimental").EventContext} context
  */
-async function handleRequest(request) {
-    const nonce = crypto.generateUUID();
+export async function onRequest(context) {
 
-    const response = await fetch(request);
+    /**
+     * @type {Response}
+     */
+    const response = await context.next();
+    const nonce = crypto.randomUUID();
+
     let html = await response.text();
 
-    const cspNonceHeader = `
-        script-src 'self' 'nonce-${nonce}';
-        style-src 'self' 'nonce-${nonce}';
-    `;
-
-    html = html.replace('<script nonce="">', `<script nonce="${nonce}">`);
-    html = html.replace('<style nonce="">', `<style nonce="${nonce}">`);
+    // Add nonce to script and style tags that require it
+    html = html.replace(/<script(.*?)>/g, `<script$1 nonce="${nonce}">`);
+    html = html.replace(/<style>(.*?)>/g, `<style$1 nonce="${nonce}">`);
     
     const newResponse = new Response(html, response);
-    request.headers.append('Content-Security-Policy', cspNonceHeader);
+
+    const cspHeader = response.headers.get('Content-Security-Policy');
+    const newCSPHeader = addNonceToCSPHeader(cspHeader, nonce);
+
+    newResponse.headers.set('Content-Security-Policy', newCSPHeader);
 
     return newResponse;
+}
+
+/**
+ * Adds a nonce to a CSP header
+ * @param {string} cspHeader 
+ * @param {string} nonce 
+ * @returns {string}
+ */
+function addNonceToCSPHeader(cspHeader, nonce) {
+    const csp = cspHeader.split(';');
+    return csp.map((directive) => {
+        if (directive.includes('script-src') || directive.includes('style-src')) {
+            return `${directive} 'nonce-${nonce}'`;
+        }
+        return directive;
+    }).join(';');
 }

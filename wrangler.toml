@@ -1,0 +1,8 @@
+name = "armorylinks"
+main = "wwwroot/index.min.js"
+compatibility_date = "2024-08-29"
+
+workers_dev = true
+
+[build]
+command = "npm run build"
